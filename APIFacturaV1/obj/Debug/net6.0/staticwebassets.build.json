@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "8zsAPzW1hVSgzTvQBuavCmxX50KLZz8NG7xFtAQuc+g=",
+  "Source": "APIFacturaV1",
+  "BasePath": "_content/APIFacturaV1",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
