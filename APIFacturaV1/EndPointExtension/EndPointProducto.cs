@@ -2,6 +2,7 @@
 using APIFacturaV1.Models;
 using APIFacturaV1.Repository.Interfaces;
 using APIFacturaV1.Specification;
+using APIFacturaV1.Util;
 using AutoMapper;
 using MiniValidation;
 
@@ -25,7 +26,7 @@ namespace APIFacturaV1.EndPointExtension
                 }
             });
 
-            app.MapGet("api/producto/{id}", async (IBaseRepository<Producto> repository, int id) =>
+            app.MapGet("api/producto/{id}", async (IBaseRepository<Producto> repository, IMapper mapper, int id) =>
             {
                 try
                 {
@@ -33,22 +34,23 @@ namespace APIFacturaV1.EndPointExtension
                     var producto = await repository.ObtenerEntidadConEspecificacion(spec);
 
                     if (producto is null) return Results.NotFound();
-                    return Results.Ok(producto);
+                    return Results.Ok(mapper.Map<ProductoDTO>(producto));
                 }
                 catch (Exception ex)
                 {
                     return Results.Problem(ex.Message);
                 }
-            });
+            }).WithName(EndPointNames.ObteneProducto);
 
-            app.MapPost("api/producto", async (IBaseRepository<Producto> repository, Producto producto) =>
+            app.MapPost("api/producto", async (IBaseRepository<Producto> repository, IMapper mapper, ProductoDTO productoDTO) =>
             {
                 try
                 {
-                    if (!MiniValidator.TryValidate(producto, out var errors)) return Results.BadRequest(errors);
+                    if (!MiniValidator.TryValidate(productoDTO, out var errors)) return Results.BadRequest(errors);
+                    var producto = mapper.Map<Producto>(productoDTO);
                     var resultado = await repository.InsertarAsync(producto);
                     if (resultado == 0) return Results.StatusCode(500);
-                    return Results.Ok();
+                    return Results.CreatedAtRoute(EndPointNames.ObteneProducto, new { id = resultado }, producto);
                 }
                 catch (Exception ex)
                 {
@@ -56,13 +58,13 @@ namespace APIFacturaV1.EndPointExtension
                 }
             });
 
-            app.MapPut("api/producto", async (IBaseRepository<Producto> repository, Producto producto) =>
+            app.MapPut("api/producto", async (IBaseRepository<Producto> repository, IMapper mapper, ProductoDTO productoDTO) =>
             {
                 try
                 {
 
-                    if (!MiniValidator.TryValidate(producto, out var errors)) return Results.BadRequest(errors);
-
+                    if (!MiniValidator.TryValidate(productoDTO, out var errors)) return Results.BadRequest(errors);
+                    var producto = mapper.Map<Producto>(productoDTO);
                     var resultado = await repository.ModificarAsync(producto);
                     if (resultado == 0) return Results.StatusCode(500);
                     return Results.Ok();

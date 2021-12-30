@@ -4,6 +4,7 @@ using APIFacturaV1.Repository.Interfaces;
 using APIFacturaV1.Util;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace APIFacturaV1.Repository
 {
@@ -32,20 +33,36 @@ namespace APIFacturaV1.Repository
         {
             try
             {
-                return await _context.Database.ExecuteSqlRawAsync($"{Utilidad.spInsertarCliente} @Id,@Nombres,@Apellidos,@Direccion,@Telefono,@Correo, @FechaNacimiento",
-                  new SqlParameter("@Id", model.Id),
-                  new SqlParameter("@Nombres", model.Nombres),
-                  new SqlParameter("@Apellidos", model.Apellidos),
-                  new SqlParameter("@Direccion", model.Direccion),
-                  new SqlParameter("@Telefono", model.Telefono),
-                  new SqlParameter("@Correo", model.Correo),
-                  new SqlParameter("@FechaNacimiento", model.FechaNacimiento));
+                //var nombreParam = new SqlParameter("Nombres", model.Nombres);
+                //await _context.Database.ExecuteSqlRawAsync("EXEC spInsertarCliente @Id output, @Nombres", new[] { idParam, nombreParam });
+                var idParameter = ParameterId();
+                await _context.Database.ExecuteSqlRawAsync($"{Utilidad.spInsertarCliente} @Id output,@Nombres,@Apellidos,@Direccion,@Telefono,@Correo, @FechaNacimiento",
+                idParameter,
+                 new SqlParameter("@Nombres", model.Nombres),
+                 new SqlParameter("@Apellidos", model.Apellidos),
+                 new SqlParameter("@Direccion", model.Direccion),
+                 new SqlParameter("@Telefono", model.Telefono),
+                 new SqlParameter("@Correo", model.Correo),
+                 new SqlParameter("@FechaNacimiento", model.FechaNacimiento));
+                return Convert.ToInt32(idParameter.Value);
             }
             catch (Exception)
             {
                 return 0;
             }
 
+        }
+
+        private SqlParameter ParameterId()
+        {
+            SqlParameter parameter = new SqlParameter
+            {
+                ParameterName = "@Id",
+                SqlDbType = SqlDbType.Int,
+                //Se emite la dirección a este parametro.
+                Direction = ParameterDirection.Output
+            };
+            return parameter;
         }
 
         public async Task<int> ModificarClienteAsync(Cliente model)

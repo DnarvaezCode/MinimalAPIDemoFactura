@@ -1,6 +1,7 @@
 ﻿using APIFacturaV1.DTOs;
 using APIFacturaV1.Models;
 using APIFacturaV1.Repository.Interfaces;
+using APIFacturaV1.Util;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MiniValidation;
@@ -24,7 +25,7 @@ namespace APIFacturaV1.EndPointExtension
                 }
             });
 
-            app.MapGet("api/cliente/{id}", async ([FromServices]IClienteRepository repository, int id, IMapper mapper) =>
+            app.MapGet("api/cliente/{id}", async ([FromServices] IClienteRepository repository, int id, IMapper mapper) =>
             {
                 try
                 {
@@ -36,17 +37,17 @@ namespace APIFacturaV1.EndPointExtension
                 {
                     return Results.Problem(ex.Message);
                 }
-            });
+            }).WithName(EndPointNames.ObtenerCliente);
 
-            app.MapPost("api/cliente", async ([FromServices]IClienteRepository repository, [FromBody]ClienteDTO clienteDTO, IMapper mapper) =>
+            app.MapPost("api/cliente", async ([FromServices] IClienteRepository repository, [FromBody] ClienteDTO clienteDTO, IMapper mapper) =>
             {
                 try
                 {
                     if (!MiniValidator.TryValidate(clienteDTO, out var errors)) return Results.BadRequest(errors);
                     var cliente = mapper.Map<Cliente>(clienteDTO);
-                    var resultado = await repository.InsertarClienteAsync(cliente);
-                    if (resultado == 0) return Results.StatusCode(500);
-                    return Results.Ok();
+                    var idCliente = await repository.InsertarClienteAsync(cliente);
+                    if (idCliente == 0) return Results.StatusCode(500);
+                    return Results.CreatedAtRoute(EndPointNames.ObtenerCliente, new { id = idCliente }, clienteDTO);
                 }
                 catch (Exception ex)
                 {
@@ -61,8 +62,8 @@ namespace APIFacturaV1.EndPointExtension
 
                     if (!MiniValidator.TryValidate(clienteDTO, out var errors)) return Results.BadRequest(errors);
                     var cliente = mapper.Map<Cliente>(clienteDTO);
-                    var resultado = await repository.ModificarClienteAsync(cliente);
-                    if (resultado == 0) return Results.StatusCode(500);
+                    var idCliente = await repository.ModificarClienteAsync(cliente);
+                    if (idCliente == 0) return Results.StatusCode(500);
                     return Results.Ok();
                 }
                 catch (Exception ex)
@@ -76,8 +77,8 @@ namespace APIFacturaV1.EndPointExtension
                 try
                 {
                     if (await repository.ObtenerClientePorIdAsync(id) is null) return Results.NotFound();
-                    var resultado = await repository.EliminarClienteAsync(id);
-                    if (resultado == 0) return Results.StatusCode(500);
+                    var idCliente = await repository.EliminarClienteAsync(id);
+                    if (idCliente == 0) return Results.StatusCode(500);
                     return Results.Ok();
                 }
                 catch (Exception ex)
