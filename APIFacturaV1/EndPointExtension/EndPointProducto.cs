@@ -2,7 +2,7 @@
 using APIFacturaV1.Models;
 using APIFacturaV1.Repository.Interfaces;
 using APIFacturaV1.Specification;
-using APIFacturaV1.Util;
+using APIFacturaV1.Utilities;
 using AutoMapper;
 using MiniValidation;
 

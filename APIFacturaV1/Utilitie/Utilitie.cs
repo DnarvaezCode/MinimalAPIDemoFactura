@@ -1,6 +1,6 @@
-﻿namespace APIFacturaV1.Util
+﻿namespace APIFacturaV1.Utilitie
 {
-    public static class Utilidad
+    public static class Utilitie
     {
         public const string spObtenerCliente = "spObtenerCliente";
         public const string spObtenerClientes = "spObtenerClientes";

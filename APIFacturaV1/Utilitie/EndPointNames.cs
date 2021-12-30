@@ -1,4 +1,4 @@
-﻿namespace APIFacturaV1.Util
+﻿namespace APIFacturaV1.Utilities
 {
     public static class EndPointNames
     {
