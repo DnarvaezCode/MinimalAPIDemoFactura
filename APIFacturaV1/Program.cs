@@ -16,6 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<APIFacturaContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConetion")));
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddScoped(typeof(IStoreProcedureRepository<>), typeof(StoreProcedureRepository<>));
+
 //builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 builder.Services.AddAutoMapper(configuration =>
 {

@@ -1,4 +1,7 @@
-﻿namespace APIFacturaV1.Utilitie
+﻿using Microsoft.Data.SqlClient;
+using System.Data;
+
+namespace APIFacturaV1.Utilitie
 {
     public static class Utilitie
     {
@@ -7,5 +10,17 @@
         public const string spInsertarCliente = "spInsertarCliente";
         public const string spActualizarCliente = "spActualizarCliente";
         public const string spEliminarCliente = "spEliminarCliente";
+
+        public static SqlParameter ParameterId()
+        {
+            SqlParameter parameter = new SqlParameter
+            {
+                ParameterName = "@Id",
+                SqlDbType = SqlDbType.Int,
+                //Se emite la dirección a este parametro.
+                Direction = ParameterDirection.Output
+            };
+            return parameter;
+        }
     }
 }
