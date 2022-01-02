@@ -11,7 +11,7 @@ namespace APIFacturaV1.Models
         }
         public int Id { get; set; }
         public int CategoriaId { get; set; }
-        [Required(ErrorMessage ="Campo requerido.")]
+        [Required(ErrorMessage = "Campo requerido.")]
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public decimal Precio { get; set; }

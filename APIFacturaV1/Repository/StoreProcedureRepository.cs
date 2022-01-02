@@ -13,16 +13,16 @@ namespace APIFacturaV1.Repository
         {
             _context = context;
         }
-        public async Task<IEnumerable<T>> GetDataAsync(string nameStoreProcedure, params object[] parameters)
+        public async Task<IEnumerable<T>> GetDataAsync(string storeProcedureName, params object[] parameters)
         {
-            return await _context.Set<T>().FromSqlRaw<T>(nameStoreProcedure, parameters).ToListAsync();
+            return await _context.Set<T>().FromSqlRaw<T>(storeProcedureName, parameters).ToListAsync();
         }
 
-        public async Task<int> SaveDataAsync(string nameStoreProcedure, SqlParameter sqlParameter, params object[] parameters)
+        public async Task<int> SaveDataAsync(string storeProcedureName, SqlParameter sqlParameter, params object[] parameters)
         {
             try
             {
-                var result = await _context.Database.ExecuteSqlRawAsync(nameStoreProcedure, parameters);
+                var result = await _context.Database.ExecuteSqlRawAsync(storeProcedureName, parameters);
                 if (sqlParameter is not null) return Convert.ToInt32(sqlParameter.Value);
                 return result;
             }

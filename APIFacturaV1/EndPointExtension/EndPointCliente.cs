@@ -1,7 +1,7 @@
 ﻿using APIFacturaV1.DTOs;
 using APIFacturaV1.Models;
 using APIFacturaV1.Repository.Interfaces;
-using APIFacturaV1.Utilities;
+using APIFacturaV1.Utils;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -18,7 +18,7 @@ namespace APIFacturaV1.EndPointExtension
                 try
                 {
                     //var clientes = await repository.ObtenerClientesAsync();
-                    var clientes = await storeProcedureRepository.GetDataAsync($"exec {Utilitie.Utilitie.spObtenerClientes}", new object[] { });
+                    var clientes = await storeProcedureRepository.GetDataAsync($"exec {Util.spObtenerClientes}", new object[] { });
                     return Results.Ok(mapper.Map<IEnumerable<ClienteDTO>>(clientes));
                 }
                 catch (Exception ex)
@@ -50,8 +50,8 @@ namespace APIFacturaV1.EndPointExtension
                     if (!MiniValidator.TryValidate(clienteDTO, out var errors)) return Results.BadRequest(errors);
                     //var cliente = mapper.Map<Cliente>(clienteDTO);
                     //var idCliente = await repository.InsertarClienteAsync(cliente);
-                    var idParemeter = Utilitie.Utilitie.ParameterId();
-                    int idCliente = await SaveDataAsync(storeProcedureRepository, $"{Utilitie.Utilitie.spInsertarCliente} @Id output,@Nombres,@Apellidos,@Direccion,@Telefono,@Correo, @FechaNacimiento", clienteDTO, idParemeter);
+                    var idParemeter = Util.ParameterId();
+                    int idCliente = await SaveDataAsync(storeProcedureRepository, $"{Util.spInsertarCliente} @Id output,@Nombres,@Apellidos,@Direccion,@Telefono,@Correo, @FechaNacimiento", clienteDTO, idParemeter);
                     if (idCliente == 0) return Results.StatusCode(500);
                     return Results.CreatedAtRoute(EndPointNames.ObtenerCliente, new { id = idCliente }, clienteDTO);
                 }
@@ -69,8 +69,8 @@ namespace APIFacturaV1.EndPointExtension
                     if (!MiniValidator.TryValidate(clienteDTO, out var errors)) return Results.BadRequest(errors);
                     var cliente = mapper.Map<Cliente>(clienteDTO);
                     //var idCliente = await repository.ModificarClienteAsync(cliente);
-                    var idParemeter = Utilitie.Utilitie.ParameterId();
-                    int idCliente = await SaveDataAsync(storeProcedureRepository, $"{Utilitie.Utilitie.spActualizarCliente} @Id,@Nombres,@Apellidos,@Direccion,@Telefono,@Correo, @FechaNacimiento", clienteDTO, null);
+                    var idParemeter = Util.ParameterId();
+                    int idCliente = await SaveDataAsync(storeProcedureRepository, $"{Util.spActualizarCliente} @Id,@Nombres,@Apellidos,@Direccion,@Telefono,@Correo, @FechaNacimiento", clienteDTO, null);
                     if (idCliente == 0) return Results.StatusCode(500);
                     return Results.Ok();
                 }
@@ -96,11 +96,11 @@ namespace APIFacturaV1.EndPointExtension
             });
         }
 
-        private static async Task<int> SaveDataAsync(IStoreProcedureRepository<Cliente> storeProcedureRepository, string nameStoreProcedure, ClienteDTO clienteDTO, SqlParameter idParemeter)
+        private static async Task<int> SaveDataAsync(IStoreProcedureRepository<Cliente> storeProcedureRepository, string storeProcedureName, ClienteDTO clienteDTO, SqlParameter idParemeter)
         {
-            return await storeProcedureRepository.SaveDataAsync(nameStoreProcedure,
+            return await storeProcedureRepository.SaveDataAsync(storeProcedureName,
                 idParemeter,
-                new[] {         
+                new[] {
                         idParemeter is null ?  new SqlParameter("@Id", clienteDTO.Id) : idParemeter,
                         new SqlParameter("@Nombres", clienteDTO.Nombres),
                         new SqlParameter("@Apellidos", clienteDTO.Apellidos),

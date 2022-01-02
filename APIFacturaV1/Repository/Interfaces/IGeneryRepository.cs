@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace APIFacturaV1.Repository.Interfaces
 {
-    public interface IBaseRepository<T> where T : class
+    public interface IGeneryRepository<T> where T : class
     {
         Task<IEnumerable<T>> ObtenerTodosAsync();
         Task<T> ObtenerPorIdAsync(int id);

@@ -1,4 +1,4 @@
-﻿ using APIFacturaV1.Models;
+﻿using APIFacturaV1.Models;
 using APIFacturaV1.Specification.Evaluator;
 
 namespace APIFacturaV1.Specification

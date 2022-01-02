@@ -1,9 +1,9 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
 
-namespace APIFacturaV1.Utilitie
+namespace APIFacturaV1.Utils
 {
-    public static class Utilitie
+    public static class Util
     {
         public const string spObtenerCliente = "spObtenerCliente";
         public const string spObtenerClientes = "spObtenerClientes";

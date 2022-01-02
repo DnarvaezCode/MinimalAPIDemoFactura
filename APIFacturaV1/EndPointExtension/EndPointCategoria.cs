@@ -1,7 +1,7 @@
 ﻿using APIFacturaV1.DTOs;
 using APIFacturaV1.Models;
 using APIFacturaV1.Repository.Interfaces;
-using APIFacturaV1.Utilities;
+using APIFacturaV1.Utils;
 using AutoMapper;
 using MiminalApis.Validators;
 using MiniValidation;
@@ -12,12 +12,12 @@ namespace APIFacturaV1.EndPointExtension
     {
         public static void AddEndPointCategoria(this WebApplication app)
         {
-            app.MapGet("api/categoria", async (IBaseRepository<Categoria> repository, IMapper mapper) =>
+            app.MapGet("api/categoria", async (IGeneryRepository<Categoria> repository, IMapper mapper) =>
             {
                 try
                 {
                     var categorias = await repository.ObtenerTodosAsync();
-                    return Results.Ok(mapper.Map<CategoriaDTO>(categorias));
+                    return Results.Ok(mapper.Map<IEnumerable<CategoriaDTO>>(categorias));
                 }
                 catch (Exception ex)
                 {
@@ -25,7 +25,7 @@ namespace APIFacturaV1.EndPointExtension
                 }
             });
 
-            app.MapGet("api/categoria/{id:int}", async (IBaseRepository<Categoria> repository, IMapper mapper, int id) =>
+            app.MapGet("api/categoria/{id:int}", async (IGeneryRepository<Categoria> repository, IMapper mapper, int id) =>
             {
                 try
                 {
@@ -42,7 +42,7 @@ namespace APIFacturaV1.EndPointExtension
             .Produces(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest);
 
-            app.MapPost("api/categoria", async (IBaseRepository<Categoria> repository, IMapper mapper, CategoriaDTO categoriaDTO) =>
+            app.MapPost("api/categoria", async (IGeneryRepository<Categoria> repository, IMapper mapper, CategoriaDTO categoriaDTO) =>
             {
                 try
                 {
@@ -57,7 +57,7 @@ namespace APIFacturaV1.EndPointExtension
                 }
             }).WithValidator<CategoriaDTO>();
 
-            app.MapPut("api/categoria", async (IBaseRepository<Categoria> repository, IMapper mapper, CategoriaDTO categoriaDTO) =>
+            app.MapPut("api/categoria", async (IGeneryRepository<Categoria> repository, IMapper mapper, CategoriaDTO categoriaDTO) =>
             {
                 try
                 {
@@ -72,7 +72,7 @@ namespace APIFacturaV1.EndPointExtension
                 }
             }).WithValidator<CategoriaDTO>();
 
-            app.MapDelete("api/categoria", async (IBaseRepository<Categoria> repository, int id) =>
+            app.MapDelete("api/categoria", async (IGeneryRepository<Categoria> repository, int id) =>
             {
                 try
                 {

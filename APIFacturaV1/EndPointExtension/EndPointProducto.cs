@@ -2,7 +2,7 @@
 using APIFacturaV1.Models;
 using APIFacturaV1.Repository.Interfaces;
 using APIFacturaV1.Specification;
-using APIFacturaV1.Utilities;
+using APIFacturaV1.Utils;
 using AutoMapper;
 using MiniValidation;
 
@@ -12,7 +12,7 @@ namespace APIFacturaV1.EndPointExtension
     {
         public static void AddEndPointProducto(this WebApplication app)
         {
-            app.MapGet("api/producto", async (IBaseRepository<Producto> repository, IMapper mapper) =>
+            app.MapGet("api/producto", async (IGeneryRepository<Producto> repository, IMapper mapper) =>
             {
                 try
                 {
@@ -26,7 +26,7 @@ namespace APIFacturaV1.EndPointExtension
                 }
             });
 
-            app.MapGet("api/producto/{id}", async (IBaseRepository<Producto> repository, IMapper mapper, int id) =>
+            app.MapGet("api/producto/{id}", async (IGeneryRepository<Producto> repository, IMapper mapper, int id) =>
             {
                 try
                 {
@@ -42,7 +42,7 @@ namespace APIFacturaV1.EndPointExtension
                 }
             }).WithName(EndPointNames.ObteneProducto);
 
-            app.MapPost("api/producto", async (IBaseRepository<Producto> repository, IMapper mapper, ProductoDTO productoDTO) =>
+            app.MapPost("api/producto", async (IGeneryRepository<Producto> repository, IMapper mapper, ProductoDTO productoDTO) =>
             {
                 try
                 {
@@ -58,7 +58,7 @@ namespace APIFacturaV1.EndPointExtension
                 }
             });
 
-            app.MapPut("api/producto", async (IBaseRepository<Producto> repository, IMapper mapper, ProductoDTO productoDTO) =>
+            app.MapPut("api/producto", async (IGeneryRepository<Producto> repository, IMapper mapper, ProductoDTO productoDTO) =>
             {
                 try
                 {
@@ -75,7 +75,7 @@ namespace APIFacturaV1.EndPointExtension
                 }
             });
 
-            app.MapDelete("api/producto", async (IBaseRepository<Producto> repository, int id) =>
+            app.MapDelete("api/producto", async (IGeneryRepository<Producto> repository, int id) =>
             {
                 try
                 {

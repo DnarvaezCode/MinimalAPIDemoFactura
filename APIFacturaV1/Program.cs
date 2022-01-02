@@ -14,10 +14,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<APIFacturaContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConetion")));
-builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+builder.Services.AddScoped(typeof(IGeneryRepository<>), typeof(GeneryRepository<>));
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped(typeof(IStoreProcedureRepository<>), typeof(StoreProcedureRepository<>));
-
+builder.Services.AddScoped<IFacturaRepository, FacturaRepository>();
 //builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 builder.Services.AddAutoMapper(configuration =>
 {
@@ -27,7 +27,10 @@ builder.Services.AddAutoMapper(configuration =>
     configuration.CreateMap<CategoriaDTO, Categoria>();
     configuration.CreateMap<ClienteDTO, Cliente>();
     configuration.CreateMap<Cliente, ClienteDTO>();
-
+    configuration.CreateMap<Factura, FacturaDTO>();
+    configuration.CreateMap<FacturaDTO, Factura>();
+    configuration.CreateMap<DetalleFactura, DetalleFacturaDTO>();
+    configuration.CreateMap<DetalleFacturaDTO, DetalleFactura>();
 });
 
 var app = builder.Build();
@@ -44,5 +47,5 @@ app.UseHttpsRedirection();
 app.AddEndPointCategoria();
 app.AddEndPointProducto();
 app.AddEndPointCliente();
-
+app.AddEndPointFactura();
 app.Run();

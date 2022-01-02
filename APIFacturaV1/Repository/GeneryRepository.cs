@@ -7,11 +7,11 @@ using System.Linq.Expressions;
 
 namespace APIFacturaV1.Repository
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class, IEntity
+    public class GeneryRepository<T> : IGeneryRepository<T> where T : class, IEntity
     {
         private readonly APIFacturaContext _context;
 
-        public BaseRepository(APIFacturaContext context)
+        public GeneryRepository(APIFacturaContext context)
         {
             _context = context;
         }
