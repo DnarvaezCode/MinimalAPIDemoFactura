@@ -7,6 +7,7 @@ namespace APIFacturaV1.Models
         public Factura()
         {
             DetalleFactura = new HashSet<DetalleFactura>();
+            Fecha = DateTime.Now;
         }
         public int Id { get; set; }
         [Required(ErrorMessage = "El cliente es requerido.")]

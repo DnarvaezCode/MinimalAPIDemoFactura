@@ -10,6 +10,7 @@ namespace APIFacturaV1.DTOs
         public int CategoriaId { get; set; }
         [Required(ErrorMessage = "El nombre es requerido.")]
         public string Nombre { get; set; }
+        [Required(ErrorMessage = "La descripción es requerida.")]
         public string Descripcion { get; set; }
         [Required(ErrorMessage = "El precio es requerido.")]
         public decimal Precio { get; set; }

@@ -16,6 +16,12 @@ namespace APIFacturaV1.Repository
         {
             _context = context;
         }
+
+        /// <summary>
+        /// Método para eliminar cliente por id.
+        /// </summary>
+        /// <param name="id">Parámetro a filtrar.</param>
+        /// <returns>Retorna un entero con el número de fila afectada.</returns>
         public async Task<int> EliminarClienteAsync(int id)
         {
             try
@@ -28,6 +34,11 @@ namespace APIFacturaV1.Repository
             }
         }
 
+        /// <summary>
+        /// Método para insertar cliente.
+        /// </summary>
+        /// <param name="model">Data del cliente</param>
+        /// <returns>Retorna un entero con el id del nuevo registro.</returns>
         public async Task<int> InsertarClienteAsync(Cliente model)
         {
             try
@@ -51,7 +62,10 @@ namespace APIFacturaV1.Repository
             }
 
         }
-
+        /// <summary>
+        /// Método para agregar y obtener el parámetro de salida.
+        /// </summary>
+        /// <returns>Objeto de tipo SqlParameter para obtener el valor de salida.</returns>
         private SqlParameter ParameterId()
         {
             SqlParameter parameter = new SqlParameter
@@ -64,6 +78,11 @@ namespace APIFacturaV1.Repository
             return parameter;
         }
 
+        /// <summary>
+        /// Método para modificar cliente.
+        /// </summary>
+        /// <param name="model">Data del cliente.</param>
+        /// <returns>Retorna un entero con el número de fila afectada.</returns>
         public async Task<int> ModificarClienteAsync(Cliente model)
         {
             try
@@ -83,6 +102,11 @@ namespace APIFacturaV1.Repository
             }
         }
 
+        /// <summary>
+        /// Método para obtener cliente por id.
+        /// </summary>
+        /// <param name="id">Parámetro a filtrar.</param>
+        /// <returns>Retorna un objeto de tipo Cliente.</returns>
         public async Task<Cliente> ObtenerClientePorIdAsync(int id)
         {
             //return await _context.Cliente.FromSqlRaw($"SELECT * From Cliente Where Id = @Id", new SqlParameter("@Id", id)).FirstOrDefaultAsync();
@@ -90,6 +114,10 @@ namespace APIFacturaV1.Repository
             return resultado.FirstOrDefault();
         }
 
+        /// <summary>
+        /// Método para obtener todos los clientes.
+        /// </summary>
+        /// <returns>Retorna una lista de tipo Cliente.</returns>
         public async Task<IEnumerable<Cliente>> ObtenerClientesAsync()
         {
             return await _context.Cliente.FromSqlRaw<Cliente>($"exec {Util.spObtenerClientes}").ToListAsync();

@@ -15,6 +15,12 @@ namespace APIFacturaV1.Repository
         {
             _context = context;
         }
+
+        /// <summary>
+        /// Método genérico para eliminar data.
+        /// </summary>
+        /// <param name="id">Id por el que se desea eliminar.</param>
+        /// <returns>Retorna el id del registro eliminado.</returns>
         public async Task<int> EliminarAsync(int id)
         {
             using (var transaccion = _context.Database.BeginTransaction())
@@ -37,21 +43,41 @@ namespace APIFacturaV1.Repository
             }
         }
 
+        /// <summary>
+        /// Método para obtener toda la data.
+        /// </summary>
+        /// <param name="spesification">Especificación para incluir entidades relacionadas.</param>
+        /// <returns>Retorna una lista de tipo T.</returns>
         public async Task<IEnumerable<T>> ObtenerTodosAsync(ISpecification<T> spesification)
         {
             return await AplicarEspecificacion(spesification).ToListAsync();
         }
 
+        /// <summary>
+        /// Método para aplicar la especificaciones.
+        /// </summary>
+        /// <param name="specification">Parámetro de especificación para incluir entidades relacionadas.</param>
+        /// <returns>Retorna un IQueryable de tipo T.</returns>
         private IQueryable<T> AplicarEspecificacion(ISpecification<T> specification)
         {
             return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), specification);
         }
 
+        /// <summary>
+        /// Método para obtener entidad con especificación.
+        /// </summary>
+        /// <param name="specification">Parámetro con el criterio de especificación.</param>
+        /// <returns></returns>
         public async Task<T> ObtenerEntidadConEspecificacion(ISpecification<T> specification)
         {
             return await AplicarEspecificacion(specification).FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Método genérico para insertar data.
+        /// </summary>
+        /// <param name="model">Modelo a insertar</param>
+        /// <returns>Retorna un entero con el id del nuevo registro</returns>
         public async Task<int> InsertarAsync(T model)
         {
             using (var transaccion = _context.Database.BeginTransaction())
@@ -73,6 +99,11 @@ namespace APIFacturaV1.Repository
             }
         }
 
+        /// <summary>
+        /// Método genérico para actualizar data.
+        /// </summary>
+        /// <param name="model">Modelo a actualizar.</param>
+        /// <returns>Retorna un entero con el id del registro actualizado.</returns>
         public async Task<int> ModificarAsync(T model)
         {
             using (var transaccion = _context.Database.BeginTransaction())
@@ -94,6 +125,11 @@ namespace APIFacturaV1.Repository
             }
         }
 
+        /// <summary>
+        /// Método genérico para obtener data por id.
+        /// </summary>
+        /// <param name="id">Id a filtrar</param>
+        /// <returns>Retorna una entidad de tipo T.</returns>
         public async Task<T> ObtenerPorIdAsync(int id)
         {
             return await _context.Set<T>()
@@ -101,6 +137,10 @@ namespace APIFacturaV1.Repository
                .FirstOrDefaultAsync(m => m.Id == id);
         }
 
+        /// <summary>
+        /// Método genérico para obtener data.
+        /// </summary>
+        /// <returns>Retorna una lista de tipo T.</returns>
         public async Task<IEnumerable<T>> ObtenerTodosAsync()
         {
 
