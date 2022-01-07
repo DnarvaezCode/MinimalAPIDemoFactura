@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIFacturaV1.Migrations
 {
     [DbContext(typeof(APIFacturaContext))]
-    [Migration("20211227180710_Initial")]
+    [Migration("20220107013535_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,11 +53,9 @@ namespace APIFacturaV1.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Apellidos")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Correo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Direccion")
@@ -101,7 +99,7 @@ namespace APIFacturaV1.Migrations
                     b.Property<int>("FacturaId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Precio")
+                    b.Property<decimal>("PrecioUnidad")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ProductoId")
@@ -111,6 +109,10 @@ namespace APIFacturaV1.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FacturaId");
+
+                    b.HasIndex("ProductoId");
 
                     b.ToTable("DetalleFactura");
                 });
@@ -135,6 +137,8 @@ namespace APIFacturaV1.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClienteId");
+
                     b.ToTable("Factura");
                 });
 
@@ -157,7 +161,6 @@ namespace APIFacturaV1.Migrations
                         .HasColumnType("bit");
 
                     b.Property<byte[]>("Imagen")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Nombre")
@@ -167,12 +170,72 @@ namespace APIFacturaV1.Migrations
                     b.Property<decimal>("Precio")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<float>("Stock")
-                        .HasColumnType("real");
-
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoriaId");
+
                     b.ToTable("Producto");
+                });
+
+            modelBuilder.Entity("APIFacturaV1.Models.DetalleFactura", b =>
+                {
+                    b.HasOne("APIFacturaV1.Models.Factura", "Factura")
+                        .WithMany("DetalleFactura")
+                        .HasForeignKey("FacturaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("APIFacturaV1.Models.Producto", "Producto")
+                        .WithMany("DetalleFactura")
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Factura");
+
+                    b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("APIFacturaV1.Models.Factura", b =>
+                {
+                    b.HasOne("APIFacturaV1.Models.Cliente", "Cliente")
+                        .WithMany("Factura")
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+                });
+
+            modelBuilder.Entity("APIFacturaV1.Models.Producto", b =>
+                {
+                    b.HasOne("APIFacturaV1.Models.Categoria", "Categoria")
+                        .WithMany("Producto")
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
+                });
+
+            modelBuilder.Entity("APIFacturaV1.Models.Categoria", b =>
+                {
+                    b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("APIFacturaV1.Models.Cliente", b =>
+                {
+                    b.Navigation("Factura");
+                });
+
+            modelBuilder.Entity("APIFacturaV1.Models.Factura", b =>
+                {
+                    b.Navigation("DetalleFactura");
+                });
+
+            modelBuilder.Entity("APIFacturaV1.Models.Producto", b =>
+                {
+                    b.Navigation("DetalleFactura");
                 });
 #pragma warning restore 612, 618
         }

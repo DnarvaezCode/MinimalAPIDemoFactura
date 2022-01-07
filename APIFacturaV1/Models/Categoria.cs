@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace APIFacturaV1.Models
 {
-    public partial class Categoria : IEntity
+    public class Categoria : IEntity
     {
         public Categoria()
         {
@@ -13,6 +13,6 @@ namespace APIFacturaV1.Models
         [Required(ErrorMessage = "El nombre de la categoria es requerido.")]
         public string Nombre { get; set; }
         public bool Estado { get; set; }
-        public virtual IEnumerable<Producto> Producto { get; set; }
+        public IEnumerable<Producto> Producto { get; set; }
     }
 }

@@ -6,5 +6,8 @@
         public const string ObtenerCliente = "ObtenerCliente";
         public const string ObteneProducto = "ObteneProducto";
         public const string ObtenerFactura = "ObtenerFactura";
+        public const string Login = "Login";
+        public const string Register = "Register";
+
     }
 }

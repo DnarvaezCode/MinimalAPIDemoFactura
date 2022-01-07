@@ -23,7 +23,7 @@ namespace APIFacturaV1.EndPointExtension
                 {
                     return Results.Problem(ex.Message);
                 }
-            });
+            }).RequireAuthorization();
 
             app.MapGet("api/categoria/{id:int}", async (IGeneryRepository<Categoria> repository, IMapper mapper, int id) =>
             {
@@ -40,7 +40,8 @@ namespace APIFacturaV1.EndPointExtension
             })
             .WithName(EndPointNames.ObtenerCategoria)
             .Produces(StatusCodes.Status201Created)
-            .Produces(StatusCodes.Status400BadRequest);
+            .Produces(StatusCodes.Status400BadRequest)
+            .AllowAnonymous();
 
             app.MapPost("api/categoria", async (IGeneryRepository<Categoria> repository, IMapper mapper, CategoriaDTO categoriaDTO) =>
             {

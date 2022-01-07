@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace APIFacturaV1.Models
 {
-    public partial class Producto : IEntity
+    public class Producto : IEntity
     {
         public Producto()
         {
@@ -18,11 +18,9 @@ namespace APIFacturaV1.Models
         public string Descripcion { get; set; }
         [Required(ErrorMessage = "El precio es requerido.")]
         public decimal Precio { get; set; }
-        [Required(ErrorMessage = "El stock es requerido.")]
-        public double Stock { get; set; }
         public byte[] Imagen { get; set; }
         public bool Estado { get; set; }
-        public virtual Categoria Categoria { get; set; }
-        public virtual IEnumerable<DetalleFactura> DetalleFactura { get; set; }
+        public Categoria Categoria { get; set; }
+        public IEnumerable<DetalleFactura> DetalleFactura { get; set; }
     }
 }

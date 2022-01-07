@@ -19,6 +19,6 @@ namespace APIFacturaV1.Models
         public string Correo { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public bool Estado { get; set; }
-        public virtual IEnumerable<Factura> Factura { get; set; }
+        public IEnumerable<Factura> Factura { get; set; }
     }
 }

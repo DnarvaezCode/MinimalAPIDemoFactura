@@ -16,7 +16,7 @@ namespace APIFacturaV1.Models
         public string NumeroFactura { get; set; }
         [Required(ErrorMessage = "La fecha de la factura es requerido.")]
         public DateTime Fecha { get; set; }
-        public virtual Cliente Cliente { get; set; }
-        public virtual IEnumerable<DetalleFactura> DetalleFactura { get; set; }
+        public Cliente Cliente { get; set; }
+        public IEnumerable<DetalleFactura> DetalleFactura { get; set; }
     }
 }

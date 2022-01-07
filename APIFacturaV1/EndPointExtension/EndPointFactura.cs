@@ -3,6 +3,8 @@ using APIFacturaV1.Models;
 using APIFacturaV1.Repository.Interfaces;
 using APIFacturaV1.Utils;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using MiniValidation;
 
 namespace APIFacturaV1.EndPointExtension
@@ -11,7 +13,7 @@ namespace APIFacturaV1.EndPointExtension
     {
         public static void AddEndPointFactura(this WebApplication app)
         {
-            app.MapGet("api/factura", async (IFacturaRepository repository, IMapper mapper) =>
+            app.MapGet("api/factura", [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles= "Admin")]async (IFacturaRepository repository, IMapper mapper) =>
             {
                 try
                 {

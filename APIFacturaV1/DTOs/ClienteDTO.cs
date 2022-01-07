@@ -5,7 +5,7 @@ namespace APIFacturaV1.DTOs
     public class ClienteDTO
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "El nombre es requerido.")]
+        [Required(ErrorMessage = "El nombre de la categoria es requerido.")]
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
         [Required(ErrorMessage = "La dirección es requerido.")]

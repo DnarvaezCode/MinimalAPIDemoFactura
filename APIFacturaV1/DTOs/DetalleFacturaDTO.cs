@@ -13,7 +13,7 @@ namespace APIFacturaV1.DTOs
         [Required(ErrorMessage = "La cantidad es requerido.")]
         public float Cantidad { get; set; }
         [Required(ErrorMessage = "El precio es requerido.")]
-        public decimal Precio { get; set; }
+        public decimal PrecioUnidad { get; set; }
         public decimal SubTotal { get; set; }
         public virtual ProductoDTO Producto { get; set; }
     }

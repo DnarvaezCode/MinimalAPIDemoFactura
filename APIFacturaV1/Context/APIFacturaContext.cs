@@ -1,9 +1,10 @@
 ﻿using APIFacturaV1.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace APIFacturaV1.Context
 {
-    public class APIFacturaContext : DbContext
+    public class APIFacturaContext : IdentityDbContext
     {
         public APIFacturaContext(DbContextOptions<APIFacturaContext> options) : base(options)
         {
