@@ -8,7 +8,7 @@ namespace APIFacturaV1.Validations
     {
         public CategoriaValidator()
         {
-            RuleFor(x => x.Nombrex).NotEmpty().WithMessage("Campo requerido.").MinimumLength(1);
+            RuleFor(x => x.Nombre).NotEmpty().WithMessage("Campo requerido.").MinimumLength(1);
         }
     }
 }
