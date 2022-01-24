@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "qlhcTuzX+AqzPZ0+y3oPck0fBppDCTXTKKAfGiq/vMWNST7tOvKi/16c6T69xLVQtqWMDJ3g4tZwB3doMXyTNg==",
+  "dgSpecHash": "C5nUQxBdLpD2wsBIEkPl7SKRynpCaQas8hxD7CEKr1Umy4MhrWtVojuQoC8ZudecqdNdGAiIWdT94DeFBQMV/A==",
   "success": true,
   "projectFilePath": "C:\\Users\\Dnarvaez\\source\\repos\\NET Core\\APIFacturaV1\\APIFacturaV1\\APIFacturaV1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dnarvaez\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\Dnarvaez\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
-    "C:\\Users\\Dnarvaez\\.nuget\\packages\\fluentvalidation\\10.3.4\\fluentvalidation.10.3.4.nupkg.sha512",
+    "C:\\Users\\Dnarvaez\\.nuget\\packages\\fluentvalidation\\10.3.6\\fluentvalidation.10.3.6.nupkg.sha512",
+    "C:\\Users\\Dnarvaez\\.nuget\\packages\\fluentvalidation.aspnetcore\\10.3.6\\fluentvalidation.aspnetcore.10.3.6.nupkg.sha512",
+    "C:\\Users\\Dnarvaez\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\10.3.6\\fluentvalidation.dependencyinjectionextensions.10.3.6.nupkg.sha512",
     "C:\\Users\\Dnarvaez\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Dnarvaez\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.1\\microsoft.aspnetcore.authentication.jwtbearer.6.0.1.nupkg.sha512",
     "C:\\Users\\Dnarvaez\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.1\\microsoft.aspnetcore.cryptography.internal.6.0.1.nupkg.sha512",

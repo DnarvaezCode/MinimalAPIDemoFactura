@@ -10,13 +10,15 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => {
+builder.Services.AddSwaggerGen(options =>
+{
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Scheme = "Bearer",
@@ -48,6 +50,8 @@ builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped(typeof(IStoreProcedureRepository<>), typeof(StoreProcedureRepository<>));
 builder.Services.AddScoped<IFacturaRepository, FacturaRepository>();
 //builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+builder.Services.AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<CategoriaDTO>());
+
 builder.Services.AddAutoMapper(configuration =>
 {
     configuration.CreateMap<Producto, ProductoDTO>();

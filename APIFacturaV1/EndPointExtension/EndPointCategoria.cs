@@ -3,6 +3,7 @@ using APIFacturaV1.Models;
 using APIFacturaV1.Repository.Interfaces;
 using APIFacturaV1.Utils;
 using AutoMapper;
+using FluentValidation;
 using MiminalApis.Validators;
 using MiniValidation;
 
@@ -43,10 +44,17 @@ namespace APIFacturaV1.EndPointExtension
             .Produces(StatusCodes.Status400BadRequest)
             .AllowAnonymous();
 
-            app.MapPost("api/categoria", async (IGeneryRepository<Categoria> repository, IMapper mapper, CategoriaDTO categoriaDTO) =>
+            app.MapPost("api/categoria", async (IGeneryRepository<Categoria> repository, IValidator<CategoriaDTO> validator, IMapper mapper, CategoriaDTO categoriaDTO) =>
             {
                 try
                 {
+                    var validationResult = validator.Validate(categoriaDTO);
+                    if (!validationResult.IsValid)
+                    {
+                        var errors = validationResult.Errors.Select(x => new { ErrorMessage = x.ErrorMessage });
+                        return Results.BadRequest(errors);
+                    }
+
                     var categoria = mapper.Map<Categoria>(categoriaDTO);
                     var idCategoria = await repository.InsertarAsync(categoria);
                     if (idCategoria == 0) return Results.StatusCode(500);
@@ -56,7 +64,7 @@ namespace APIFacturaV1.EndPointExtension
                 {
                     return Results.Problem(ex.Message);
                 }
-            }).WithValidator<CategoriaDTO>();
+            });//.WithValidator<CategoriaDTO>();
 
             app.MapPut("api/categoria", async (IGeneryRepository<Categoria> repository, IMapper mapper, CategoriaDTO categoriaDTO) =>
             {
