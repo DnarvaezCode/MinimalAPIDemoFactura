@@ -1,4 +1,5 @@
 ﻿using APIFacturaV1.DTOs;
+using APIFacturaV1.Extensions;
 using APIFacturaV1.Models;
 using APIFacturaV1.Repository.Interfaces;
 using APIFacturaV1.Utils;
@@ -51,8 +52,9 @@ namespace APIFacturaV1.EndPointExtension
                     var validationResult = validator.Validate(categoriaDTO);
                     if (!validationResult.IsValid)
                     {
-                        var errors = validationResult.Errors.Select(x => new { ErrorMessage = x.ErrorMessage });
-                        return Results.BadRequest(errors);
+                        //var errors = validationResult.Errors.Select(x => new { ErrorMessage = x.ErrorMessage });
+                        //return Results.BadRequest(errors);
+                        return Results.ValidationProblem(validationResult.ToValidationProblems());
                     }
 
                     var categoria = mapper.Map<Categoria>(categoriaDTO);

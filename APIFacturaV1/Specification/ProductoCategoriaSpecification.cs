@@ -9,7 +9,7 @@ namespace APIFacturaV1.Specification
         {
             AddInclude(x => x.Categoria);
         }
-        public ProductoCategoriaSpecification(int id) : base(x => x.Id == id)
+        public ProductoCategoriaSpecification(int id) : base(p => p.Id == id)
         {
             AddInclude(x => x.Categoria);
         }
