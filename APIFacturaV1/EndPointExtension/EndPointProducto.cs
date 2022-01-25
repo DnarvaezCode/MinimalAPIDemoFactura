@@ -17,7 +17,7 @@ namespace APIFacturaV1.EndPointExtension
                 try
                 {
                     var spec = new ProductoCategoriaSpecification();
-                    var producto = await repository.ObtenerTodosAsync(spec);
+                    var producto = await repository.GetAllWithSpecificationAsync(spec);
                     return Results.Ok(mapper.Map<IEnumerable<ProductoDTO>>(producto));
                 }
                 catch (Exception ex)
@@ -31,7 +31,7 @@ namespace APIFacturaV1.EndPointExtension
                 try
                 {
                     var spec = new ProductoCategoriaSpecification(id);
-                    var producto = await repository.ObtenerEntidadConEspecificacion(spec);
+                    var producto = await repository.GetEntityWithSpecificationAsync(spec);
 
                     if (producto is null) return Results.NotFound();
                     return Results.Ok(mapper.Map<ProductoDTO>(producto));

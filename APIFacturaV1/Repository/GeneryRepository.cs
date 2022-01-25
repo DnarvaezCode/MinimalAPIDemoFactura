@@ -48,9 +48,9 @@ namespace APIFacturaV1.Repository
         /// </summary>
         /// <param name="spesification">Especificación para incluir entidades relacionadas.</param>
         /// <returns>Retorna una lista de tipo T.</returns>
-        public async Task<IEnumerable<T>> ObtenerTodosAsync(ISpecification<T> spesification)
+        public async Task<IEnumerable<T>> GetAllWithSpecificationAsync(ISpecification<T> spesification)
         {
-            return await AplicarEspecificacion(spesification).ToListAsync();
+            return await ApplySpecification(spesification).ToListAsync();
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace APIFacturaV1.Repository
         /// </summary>
         /// <param name="specification">Parámetro de especificación para incluir entidades relacionadas.</param>
         /// <returns>Retorna un IQueryable de tipo T.</returns>
-        private IQueryable<T> AplicarEspecificacion(ISpecification<T> specification)
+        private IQueryable<T> ApplySpecification(ISpecification<T> specification)
         {
             return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), specification);
         }
@@ -68,9 +68,9 @@ namespace APIFacturaV1.Repository
         /// </summary>
         /// <param name="specification">Parámetro con el criterio de especificación.</param>
         /// <returns></returns>
-        public async Task<T> ObtenerEntidadConEspecificacion(ISpecification<T> specification)
+        public async Task<T> GetEntityWithSpecificationAsync(ISpecification<T> specification)
         {
-            return await AplicarEspecificacion(specification).FirstOrDefaultAsync();
+            return await ApplySpecification(specification).FirstOrDefaultAsync();
         }
 
         /// <summary>

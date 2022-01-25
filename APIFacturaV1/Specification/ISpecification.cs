@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace APIFacturaV1.Specification.Evaluator
+namespace APIFacturaV1.Specification
 {
     public interface ISpecification<T>
     {

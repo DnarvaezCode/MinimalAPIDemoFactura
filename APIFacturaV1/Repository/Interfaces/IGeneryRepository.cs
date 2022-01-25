@@ -1,5 +1,4 @@
 ﻿using APIFacturaV1.Specification;
-using APIFacturaV1.Specification.Evaluator;
 using System.Linq.Expressions;
 
 namespace APIFacturaV1.Repository.Interfaces
@@ -11,7 +10,7 @@ namespace APIFacturaV1.Repository.Interfaces
         Task<int> InsertarAsync(T model);
         Task<int> ModificarAsync(T model);
         Task<int> EliminarAsync(int id);
-        Task<IEnumerable<T>> ObtenerTodosAsync(ISpecification<T> spesification);
-        Task<T> ObtenerEntidadConEspecificacion(ISpecification<T> specification);
+        Task<IEnumerable<T>> GetAllWithSpecificationAsync(ISpecification<T> spesification);
+        Task<T> GetEntityWithSpecificationAsync(ISpecification<T> specification);
     }
 }
